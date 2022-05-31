@@ -1,0 +1,313 @@
+/*custom font*/
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-stretch: normal;
+  src: url(https://fonts.gstatic.com/s/opensans/v29/memSYaGs126MiZpBA-UvWbX2vVnXBbObj2OVZyOOSr4dVJWUgsjZ0B4gaVc.ttf) format('truetype');
+}
+/*basic reset*/
+* {
+  margin: 0;
+  padding: 0;
+}
+html {
+  height: 100%;
+  background: #0e0e0e;
+  direction: rtl;
+  text-align: right;
+}
+body {
+  font-family: 'Vazirmatn', sans-serif;
+  direction: rtl;
+  text-align: right;
+}
+/*form styles*/
+#msform {
+  width: 600px;
+  margin: 50px auto;
+  position: relative;
+}
+#msform fieldset {
+  background: white;
+  border: 0 none;
+  border-radius: 3px;
+  box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.4);
+  padding: 20px 30px;
+  box-sizing: border-box;
+  width: 80%;
+  margin: 0 10%;
+  /*stacking fieldsets above each other*/
+  position: absolute;
+}
+/*Hide all except first fieldset*/
+#msform fieldset:not(:first-of-type) {
+  display: none;
+}
+/*inputs*/
+#msform input,
+#msform textarea {
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  margin-bottom: 10px;
+  width: 100%;
+  box-sizing: border-box;
+  font-family: montserrat;
+  color: #2C3E50;
+  font-size: 13px;
+}
+/*buttons*/
+#msform .action-button {
+  background: #f9f9f9;
+  color: #333;
+  max-width: 49%;
+  margin: 0 auto;
+  display: -webkit-inline-flex;
+  display: inline-flex;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  align-items: center;
+  padding: 8px 3px;
+  cursor: pointer;
+  border: 1px solid #dedede;
+  border-radius: 17px;
+  font-weight: 400;
+  font-size: 13px;
+  outline: 0!important;
+  font-family: 'Vazirmatn', sans-serif;
+}
+
+#msform fieldset .input-btn.selected {
+  color: #fff;
+  background-color: #345d90;
+  -webkit-transition: .5s;
+  transition: .5s;
+  border-color: #345d90;
+}
+
+.navigation-container {
+  display: -webkit-flex;
+    display: flex;
+    -webkit-justify-content: space-between;
+    justify-content: space-between;
+    margin: 3em 0 0;
+}
+
+#msform .action-button:hover,
+#msform .action-button:focus {
+  background: #f5f5f5;
+  color: #333;
+}
+/*headings*/
+.fs-title {
+  font-size: 26px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #333;
+  margin-bottom: 10px;
+}
+.fs-subtitle {
+  font-weight: normal;
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 3em;
+}
+/*progressbar*/
+#progressbar {
+  margin-bottom: 30px;
+  overflow: hidden;
+  /*CSS counters to number the steps*/
+  counter-reset: step;
+}
+#progressbar li {
+  list-style-type: none;
+  color: white;
+  text-transform: uppercase;
+  font-size: 9px;
+  width: 10%;
+  float: left;
+  position: relative;
+}
+#progressbar li:before {
+  content: counter(step);
+  counter-increment: step;
+  width: 20px;
+  line-height: 20px;
+  display: block;
+  font-size: 10px;
+  color: #333;
+  background: white;
+  border-radius: 3px;
+  margin: 0 auto 5px auto;
+}
+/*progressbar connectors*/
+#progressbar li:after {
+  content: '';
+  width: 100%;
+  height: 2px;
+  background: white;
+  position: absolute;
+  left: -50%;
+  top: 9px;
+  z-index: -1;
+  /*put it behind the numbers*/
+}
+#progressbar li:first-child:after {
+  /*connector not needed before the first step*/
+  content: none;
+}
+/*marking active/completed steps green*/
+/*The number of the step and the connector before it = green*/
+#progressbar li.active:before,
+#progressbar li.active:after {
+  background: #67d5bf;
+  color: white;
+}
+.help-block {
+  font-size: 0.8em;
+  color: #7c7c7c;
+  text-align: left;
+  margin-bottom: 0.5em;
+}
+
+.previous,.next {
+  border: none;
+  background: none;
+  font-family: 'Vazirmatn', sans-serif;
+  font-size: 13px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4px;
+  border-radius: 4px;
+}
+
+.previous span {
+  padding-left: 8px;
+}
+
+.next span {
+  padding-right: 8px;
+}
+
+.next[data-btn] {
+  background: #00b4ff;
+  color: white;
+  box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%);
+}
+
+.next[data-btn]:hover {
+  background: rgb(0, 125, 178);
+}
+
+.next[disabled] {
+  background: #e0e0e0;
+}
+
+.next[disabled]:hover {
+  cursor: not-allowed;
+}
+
+.next[data-btn] svg {
+  fill: white;
+}
+
+.previous:hover,.next:hover{
+  text-decoration: none;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+.previous svg,.next svg {
+  fill: currentColor;
+  width: 1em;
+  height: 1em;
+  display: inline-block;
+  font-size: 1.5rem;
+  transition: fill 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+  flex-shrink: 0;
+  user-select: none;
+}
+
+#msform select, #msform input[type="text"], #msform input[type="number"] {
+  width: 100%;
+  padding: 10px 6px;
+  border-radius: 4px;
+  border-color: #c4c4c4;
+}
+
+#msform .select2-container {
+  width: 100% !important;
+}
+
+.select2-results__option {
+  font-size: 13px;
+}
+
+.select2-container--default .select2-search--dropdown .select2-search__field {
+  border: 1px solid #aaa;
+  direction: rtl;
+  text-align: right;
+}
+
+.select2-container .select2-selection--single .select2-selection__rendered {
+  font-size: 13px;
+}
+
+#msform .select2-container--default .select2-selection--single .select2-selection__arrow {
+  right: auto;
+  top: 10px;
+  left: 10px;
+}
+
+#msform .select2-container--default .select2-selection--single .select2-selection__rendered {
+  line-height: 45px;
+}
+
+#msform .select2-container .select2-selection--single {
+  height: 45px !important;
+}
+
+.msform-input-container {
+  position: relative;
+}
+
+.msform-input-container label {
+  position: absolute;
+  font-size: 13px;
+  z-index: 1;
+  top: 13px;
+  right: 13px;
+  transition: all 0.3s ease;
+}
+
+#msform .select2-container--open span span  {
+  border-color: #00b4ff;
+}
+
+.select2-container.has-option ~ label {
+  top: -9px;
+  font-size: 10px;
+  background: white;
+  padding: 0 5px;
+  color: rgba(0, 0, 0, 0.54);
+}
+
+.select2-container--open ~ label {
+  top: -9px;
+  font-size: 10px;
+  background: white;
+  padding: 0 5px;
+  border-color: #00b4ff;
+  color: #00b4ff;
+}
+
+.select2-results__options li:first-of-type {
+  display: none;
+}
+
+.select2-container--default .select2-search--dropdown .select2-search__field {
+  font-family: 'Vazirmatn', sans-serif;
+}
