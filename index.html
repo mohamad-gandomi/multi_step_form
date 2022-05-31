@@ -20,8 +20,8 @@
 		<h2 class="fs-title">بیمه مسئولیت پزشکان</h2>
 		<h3 class="fs-subtitle">پزشک هستید یا پیراپزشک؟</h3>
     	<!--<p class="help-block">List your strengths here.</p>-->
-		<input type="button" class="action-button input-btn" value="پزشک" data-btn="1">
-		<input type="button" class="action-button input-btn" value="پیراپزشک" data-btn="2">
+		<input type="button" class="action-button input-btn" value="پزشک" data-btn="1" >
+		<input type="button" class="action-button input-btn" value="پیراپزشک" data-btn="2" >
 		
 		<div class="navigation-container">
 
@@ -39,8 +39,10 @@
 		<h2 class="fs-title">بیمه مسئولیت پزشکان</h2>
 		<h3 class="fs-subtitle">تخصص خود را انتخاب کنید.</h3>
 
+		<input type="text" required>
+
 		<div class="msform-input-container">
-			<select name="cars" id="cars" class="select2 required">
+			<select name="cars" id="cars" class="select2 required" required>
 				<option value=""></option>
 				<option value="volvo" data-option="2">جراح عمومی</option>
 				<option value="saab" data-option="4">متخصص بیهوشی</option>
@@ -52,7 +54,7 @@
 
 		<div class="navigation-container">
 
-			<button class="previous" >
+			<button class="previous">
 				<svg focusable="false" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></svg>
 				<span>مرحله قبل</span>
 			</button>
