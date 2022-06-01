@@ -1,35 +1,56 @@
 (function($){
 	$( document ).ready(function(){
-		
-		var animating; //flag to prevent quick multi-click glitches
+
+		let animating; //flag to prevent quick multi-click glitches
+		let msformValidation;
+
 		$('.select2').select2();
 
+		msformValidation = $('#msform').validate({
+			submitHandler: function () { },
+			rules:{
+				'postcode': { // this is the input name for the first step
+					required: true        
+				},
+				'property': { // this is the input name of the radio group in the second step
+					required: true
+				}
+			}  
+		});
+
 		const validateFieldset = () => {
-			let elements = [];
-			let errors = [];
+
+			let validationPassed = true, elements;
 			elements = $('input,textarea,select').filter('[required]:visible');
+
+			if (!elements.length) {
+				$('button').filter('[disabled]:visible').removeAttr('disabled');
+				validationPassed= true;
+				return;
+			};
+
 			elements.each(function() {
-				if (!$(this).val()) {
-					errors.push('required');
+				if(!$(this).valid()) {
+					validationPassed= false;
+					$('button').filter('.next:visible').attr('disabled', true);
+					return;
 				}
 			});
-			if (errors.length) {
-				return false;
-			} else {
+
+			if (validationPassed) {
 				$('button').filter('[disabled]:visible').removeAttr('disabled');
-				return true;
 			}
+
+			return validationPassed;
+
 		}
 		
 		const goToNextFieldset = (next_fs, duration = 500) => {
-			if (!validateFieldset()) {
-				animating = false;
-				return false;
-			}
+
 			let current_fs = $('fieldset').filter(':visible');
 			next_fs.find('.previous').attr('data-btn', current_fs.attr('data-fs'));
 			current_fs.find('.next').attr('data-btn', next_fs.attr('data-fs'));
-		
+ 
 			next_fs.show();
 			current_fs.animate({opacity: 0}, {
 				step: function(now, mx) {
@@ -81,7 +102,12 @@
 			if(animating) return false;
 			animating = true;
 			next_fs = $( 'fieldset[data-fs='+ $(this).attr('data-btn') + ']' );
-			goToNextFieldset (next_fs, 500);
+			if( false == validateFieldset() ){
+				animating = false;
+				return;
+			} else {
+				goToNextFieldset (next_fs, 500);
+			}
 		})
 		
 		$(document).on('change', 'select', function(){
@@ -93,18 +119,39 @@
 			}
 			animating = true;
 			next_fs = $( 'fieldset[data-fs='+ $(this).find(':selected').attr('data-option') + ']' );
-			goToNextFieldset (next_fs, 500);
+			if( false == validateFieldset() ){
+				animating = false;
+				return;
+			} else {
+				goToNextFieldset (next_fs, 500);
+			}
 		});
 		
 		$(document).on('click', 'input[data-btn]', function(e){
 			e.preventDefault();
+			
 			if(animating) return false;
 			animating = true;
 			next_fs = $( 'fieldset[data-fs='+ $(this).attr('data-btn') + ']' );
 			$('input').filter('[data-btn]:visible').removeClass('selected');
 			$(this).addClass('selected');
-			goToNextFieldset (next_fs, 500);
-		})
+			if( false == validateFieldset() ){
+				animating = false;
+				return;
+			} else {
+				goToNextFieldset (next_fs, 500);
+			}
+		});
+
+		$(document).on('change', 'input', function(e){
+			$(this).val().length > 0 ? $(this).addClass('input-has-value') : $(this).removeClass('input-has-value');
+			if( false == validateFieldset() ){
+				animating = false;
+				return;
+			} else {
+				goToNextFieldset (next_fs, 500);
+			}
+		});
 
 	});
 }(jQuery));
