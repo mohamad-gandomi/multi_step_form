@@ -2,23 +2,10 @@
 	$( document ).ready(function(){
 
 		let animating; //flag to prevent quick multi-click glitches
-		let msformValidation;
 
 		$('.select2').select2();
 
-		msformValidation = $('#msform').validate({
-			submitHandler: function () { },
-			rules:{
-				'postcode': { // this is the input name for the first step
-					required: true        
-				},
-				'property': { // this is the input name of the radio group in the second step
-					required: true
-				}
-			}  
-		});
-
-		const validateFieldset = () => {
+		const isFieldsetValid = () => {
 
 			let validationPassed = true, elements;
 			elements = $('input,textarea,select').filter('[required]:visible');
@@ -102,7 +89,8 @@
 			if(animating) return false;
 			animating = true;
 			next_fs = $( 'fieldset[data-fs='+ $(this).attr('data-btn') + ']' );
-			if( false == validateFieldset() ){
+			if(!next_fs.length) next_fs = $(this).parent().parent().next();
+			if( false == isFieldsetValid() ){
 				animating = false;
 				return;
 			} else {
@@ -119,7 +107,7 @@
 			}
 			animating = true;
 			next_fs = $( 'fieldset[data-fs='+ $(this).find(':selected').attr('data-option') + ']' );
-			if( false == validateFieldset() ){
+			if( false == isFieldsetValid() ){
 				animating = false;
 				return;
 			} else {
@@ -129,13 +117,12 @@
 		
 		$(document).on('click', 'input[data-btn]', function(e){
 			e.preventDefault();
-			
 			if(animating) return false;
 			animating = true;
 			next_fs = $( 'fieldset[data-fs='+ $(this).attr('data-btn') + ']' );
 			$('input').filter('[data-btn]:visible').removeClass('selected');
 			$(this).addClass('selected');
-			if( false == validateFieldset() ){
+			if( false == isFieldsetValid() ){
 				animating = false;
 				return;
 			} else {
@@ -143,9 +130,9 @@
 			}
 		});
 
-		$(document).on('change', 'input', function(e){
+		$(document).on('change', 'input', function(){
 			$(this).val().length > 0 ? $(this).addClass('input-has-value') : $(this).removeClass('input-has-value');
-			if( false == validateFieldset() ){
+			if( false == isFieldsetValid() ){
 				animating = false;
 				return;
 			} else {
